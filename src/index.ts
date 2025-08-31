@@ -1,8 +1,8 @@
 import { User } from "./models/User";
 
-const user = new User({ id: "16b7", name: "ali", age: 50 });
+const user = new User({ name: "aooo", age: 42 });
 
-user.save();
+user.sync.save({ id: "f13e", name: "ali", age: 50 });
 
 user.events.on("change", () => {
   console.log("changed");
