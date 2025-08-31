@@ -6096,7 +6096,35 @@ exports.isCancel = isCancel;
 exports.CanceledError = CanceledError;
 exports.AxiosError = AxiosError;
 exports.Axios = Axios;
-},{"./lib/axios.js":"node_modules/axios/lib/axios.js"}],"src/models/User.ts":[function(require,module,exports) {
+},{"./lib/axios.js":"node_modules/axios/lib/axios.js"}],"src/models/Eventing.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Eventing = void 0;
+var Eventing = /** @class */function () {
+  function Eventing() {
+    this.events = {};
+  }
+  Eventing.prototype.on = function (eventName, cb) {
+    var handlers = this.events[eventName] || [];
+    handlers.push(cb);
+    this.events[eventName] = handlers;
+  };
+  Eventing.prototype.trigger = function (eventName) {
+    var handlers = this.events[eventName];
+    if (!handlers || handlers.length === 0) {
+      return;
+    }
+    handlers.forEach(function (callbackfn) {
+      return callbackfn();
+    });
+  };
+  return Eventing;
+}();
+exports.Eventing = Eventing;
+},{}],"src/models/User.ts":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -6109,42 +6137,40 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.User = void 0;
 var axios_1 = __importDefault(require("axios"));
+var Eventing_1 = require("./Eventing");
 var User = /** @class */function () {
   function User(data) {
     this.data = data;
-    this.events = {};
+    this.events = new Eventing_1.Eventing();
   }
   User.prototype.get = function (propName) {
     return this.data[propName];
   };
   User.prototype.set = function (update) {
     Object.assign(this.data, update);
-    this.trigger("change");
-  };
-  User.prototype.on = function (eventName, cb) {
-    var handlers = this.events[eventName] || [];
-    handlers.push(cb);
-    this.events[eventName] = handlers;
-  };
-  User.prototype.trigger = function (eventName) {
-    var handlers = this.events[eventName];
-    if (!handlers || handlers.length === 0) {
-      return;
-    }
-    handlers.forEach(function (callbackfn) {
-      return callbackfn();
-    });
+    this.events.trigger("change");
   };
   User.prototype.fetch = function () {
     var _this = this;
     axios_1.default.get("http://localhost:3000/users/".concat(this.get("id"))).then(function (res) {
       _this.set(res.data);
+      console.log(res.data);
     });
+  };
+  User.prototype.save = function () {
+    var id = this.get("id");
+    if (id) {
+      //put
+      axios_1.default.put("http://localhost:3000/users/".concat(id), this.data);
+    } else {
+      //post
+      axios_1.default.post("http://localhost:3000/users", this.data);
+    }
   };
   return User;
 }();
 exports.User = User;
-},{"axios":"node_modules/axios/index.js"}],"src/index.ts":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./Eventing":"src/models/Eventing.ts"}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6152,9 +6178,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 var User_1 = require("./models/User");
 var user = new User_1.User({
-  id: '1a10'
+  id: "16b7",
+  name: "ali",
+  age: 50
 });
-user.fetch();
+user.save();
+user.events.on("change", function () {
+  console.log("changed");
+});
+user.events.trigger("change");
 },{"./models/User":"src/models/User.ts"}],"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -6180,7 +6212,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39213" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37081" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
