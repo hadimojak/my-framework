@@ -1,21 +1,23 @@
-type Cb = () => void;
+type Callback = () => void;
 
 export class Eventing {
-  events: { [key: string]: Cb[] } = {};
+  events: { [key: string]: Callback[] } = {};
 
-  on(eventName: string, cb: Cb): void {
+  on = (eventName: string, callback: Callback): void => {
     const handlers = this.events[eventName] || [];
-    handlers.push(cb);
+    handlers.push(callback);
     this.events[eventName] = handlers;
-  }
+  };
 
-  trigger(eventName: string): void {
+  trigger = (eventName: string): void => {
     const handlers = this.events[eventName];
 
     if (!handlers || handlers.length === 0) {
       return;
     }
 
-    handlers.forEach(callbackfn => callbackfn());
-  }
+    handlers.forEach((callback) => {
+      callback();
+    });
+  };
 }

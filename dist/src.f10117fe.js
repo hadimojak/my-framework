@@ -126,22 +126,23 @@ Object.defineProperty(exports, "__esModule", {
 exports.Eventing = void 0;
 var Eventing = /** @class */function () {
   function Eventing() {
+    var _this = this;
     this.events = {};
+    this.on = function (eventName, callback) {
+      var handlers = _this.events[eventName] || [];
+      handlers.push(callback);
+      _this.events[eventName] = handlers;
+    };
+    this.trigger = function (eventName) {
+      var handlers = _this.events[eventName];
+      if (!handlers || handlers.length === 0) {
+        return;
+      }
+      handlers.forEach(function (callback) {
+        callback();
+      });
+    };
   }
-  Eventing.prototype.on = function (eventName, cb) {
-    var handlers = this.events[eventName] || [];
-    handlers.push(cb);
-    this.events[eventName] = handlers;
-  };
-  Eventing.prototype.trigger = function (eventName) {
-    var handlers = this.events[eventName];
-    if (!handlers || handlers.length === 0) {
-      return;
-    }
-    handlers.forEach(function (callbackfn) {
-      return callbackfn();
-    });
-  };
   return Eventing;
 }();
 exports.Eventing = Eventing;
@@ -157,7 +158,7 @@ function bind(fn, thisArg) {
     return fn.apply(thisArg, arguments);
   };
 }
-},{}],"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -1074,7 +1075,7 @@ var _default = exports.default = {
   asap,
   isIterable
 };
-},{"./helpers/bind.js":"node_modules/axios/lib/helpers/bind.js","process":"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/axios/lib/core/AxiosError.js":[function(require,module,exports) {
+},{"./helpers/bind.js":"node_modules/axios/lib/helpers/bind.js","process":"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/axios/lib/core/AxiosError.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1170,7 +1171,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 // eslint-disable-next-line strict
 var _default = exports.default = null;
-},{}],"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/base64-js/index.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/base64-js/index.js":[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -1322,7 +1323,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/ieee754/index.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/ieee754/index.js":[function(require,module,exports) {
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -1409,14 +1410,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/isarray/index.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/isarray/index.js":[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -3209,7 +3210,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/base64-js/index.js","ieee754":"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/ieee754/index.js","isarray":"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/isarray/index.js","buffer":"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/axios/lib/helpers/toFormData.js":[function(require,module,exports) {
+},{"base64-js":"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/base64-js/index.js","ieee754":"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/ieee754/index.js","isarray":"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/isarray/index.js","buffer":"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/axios/lib/helpers/toFormData.js":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 'use strict';
 
@@ -3406,7 +3407,7 @@ function toFormData(obj, formData, options) {
   return formData;
 }
 var _default = exports.default = toFormData;
-},{"../utils.js":"node_modules/axios/lib/utils.js","../core/AxiosError.js":"node_modules/axios/lib/core/AxiosError.js","../platform/node/classes/FormData.js":"node_modules/axios/lib/helpers/null.js","buffer":"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/axios/lib/helpers/AxiosURLSearchParams.js":[function(require,module,exports) {
+},{"../utils.js":"node_modules/axios/lib/utils.js","../core/AxiosError.js":"node_modules/axios/lib/core/AxiosError.js","../platform/node/classes/FormData.js":"node_modules/axios/lib/helpers/null.js","buffer":"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/axios/lib/helpers/AxiosURLSearchParams.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3707,8 +3708,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _index = _interopRequireDefault(require("./node/index.js"));
 var utils = _interopRequireWildcard(require("./common/utils.js"));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 var _default = exports.default = {
   ...utils,
@@ -6164,14 +6164,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.Attributes = void 0;
 var Attributes = /** @class */function () {
   function Attributes(data) {
+    var _this = this;
     this.data = data;
+    this.get = function (key) {
+      return _this.data[key];
+    };
   }
-  Attributes.prototype.get = function (key) {
-    return this.data[key];
-  };
   Attributes.prototype.set = function (update) {
     Object.assign(this.data, update);
-    // this.events.trigger("change");
   };
   return Attributes;
 }();
@@ -6193,6 +6193,27 @@ var User = /** @class */function () {
     this.sync = new Sync_1.Sync(rootUrl);
     this.attributes = new Attributes_1.Attributes(attrs);
   }
+  Object.defineProperty(User.prototype, "on", {
+    get: function get() {
+      return this.events.on;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(User.prototype, "trigger", {
+    get: function get() {
+      return this.events.trigger;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(User.prototype, "get", {
+    get: function get() {
+      return this.attributes.get;
+    },
+    enumerable: false,
+    configurable: true
+  });
   return User;
 }();
 exports.User = User;
@@ -6204,19 +6225,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 var User_1 = require("./models/User");
 var user = new User_1.User({
-  name: "aooo",
-  age: 42
+  name: "new record",
+  age: 0
 });
-user.sync.save({
-  id: "f13e",
-  name: "ali",
-  age: 50
+console.log(user.get("name"));
+user.on("change", function () {
+  console.log("user hcanged");
 });
-user.events.on("change", function () {
-  console.log("changed");
-});
-user.events.trigger("change");
-},{"./models/User":"src/models/User.ts"}],"../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+user.trigger("change");
+},{"./models/User":"src/models/User.ts"}],"../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -6241,7 +6258,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33425" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45201" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -6385,5 +6402,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../.nvm/versions/node/v20.18.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.ts"], null)
+},{}]},{},["../../.nvm/versions/node/v22.14.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.ts"], null)
 //# sourceMappingURL=/src.f10117fe.js.map
